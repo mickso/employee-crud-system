@@ -14,17 +14,17 @@ class EmployeeTest {
 	@BeforeEach
 	public void setUp() {
 		
-	    this.a = new Employee(1, "A");
-	    this.b = new Employee(2, "B");
-	    this.c = new Employee(3, "C");
-	    this.d = new Employee(4, "D");
-	    this.e = new Employee(5, "E");	   
+	    this.a = new Employee(4, "A");
+	    this.b = new Employee(3, "B");
+	    this.c = new Employee(2, "C");
+	    this.d = new Employee(1, "D");
+	    this.e = new Employee(0, "E");	   
 	}
 
 
     @Test
     void employeeInit() {    
-    	assertEquals(1, this.a.getId());
+    	assertEquals(4, this.a.getId());
     	assertEquals("A", this.a.getName());
     }
     

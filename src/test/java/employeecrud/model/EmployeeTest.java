@@ -18,8 +18,7 @@ class EmployeeTest {
 	    this.b = new Employee(2, "B");
 	    this.c = new Employee(3, "C");
 	    this.d = new Employee(4, "D");
-	    this.e = new Employee(5, "E");
-	    
+	    this.e = new Employee(5, "E");	   
 	}
 
 
@@ -41,13 +40,50 @@ class EmployeeTest {
 			fail(failMessage);
 		}
     }
+        
+    @Test
+    void setPartnerToObjectWithCurrentPartnerId() {
+    	
+    	
+    	Throwable exception = assertThrows(IllegalArgumentException.class,    			
+                ()->{                	
+            		this.a.setPartner(this.b);            		
+            		Employee ACopy = new Employee(this.a.getId(), this.a.getName());            		
+            		this.b.setPartner(ACopy);
+                });
+    	
+    	assertEquals("Partner ID same as current partner ID", exception.getMessage());
+    	
+    }
     
     @Test 
-    void employeeSetPartnerToSelfIllegalArgumentException() {
+    void employeeSetPartnerToSelf() {
     	
     	Throwable exception = assertThrows(IllegalArgumentException.class,    			
                 ()->{this.a.setPartner(this.a);} );
     	
     	assertEquals("Partner ID same as Employee ID", exception.getMessage());
+    }
+    
+    
+    @Test
+    void employeePartnerTaken() {
+    	
+    	
+    	try {
+    		this.a.setPartner(this.b);
+			this.b.setPartner(this.c);
+			this.a.setPartner(this.e);
+			this.c.setPartner(this.d);
+			
+			assertEquals(this.e.getId(), this.a.getPartner().getId());
+			assertEquals(null, this.b.getPartner());
+			assertEquals(this.c.getId(), this.d.getPartner().getId());
+			
+		} catch (Exception e) {
+			
+			String failMessage = "Unexpected exception: " + e.getMessage();
+			fail(failMessage);
+		}    	    	   
     }
 }

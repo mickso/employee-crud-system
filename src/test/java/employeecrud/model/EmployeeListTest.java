@@ -1,6 +1,5 @@
 package employeecrud.model;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -11,7 +10,7 @@ class EmployeeListTest {
 	
 	private Employee a,b,c,d,e;
 	
-	private EmployeeList employeeList;
+	private PersonList employeeList;
 	
 	@BeforeEach
 	public void setUp() {
@@ -22,7 +21,7 @@ class EmployeeListTest {
 	    this.d = new Employee(1, "D");
 	    this.e = new Employee(0, "E");
 	    
-	    this.employeeList = new EmployeeList();	   
+	    this.employeeList = new PersonList();	   
 	}
 	
 	@Test
@@ -45,7 +44,7 @@ class EmployeeListTest {
             		this.employeeList.add(this.a);
             		} );
     	
-    	assertEquals("There is already an employee with the same ID in this list", exception.getMessage());
+    	assertEquals("There is already a Person with the same ID in this list", exception.getMessage());
 				
 	}
 	
@@ -53,10 +52,8 @@ class EmployeeListTest {
 	
 	@Test
 	public void getEmployeeWithNonExistingId() {
-		
-		
-		this.employeeList.add(a);
-		Employee match = this.employeeList.getEmployeeById(2);
+					
+		IEmployee match = (Employee) this.employeeList.getPersonById(0);
 		
     	
     	assertEquals(null, match);
@@ -76,7 +73,7 @@ class EmployeeListTest {
 		
 		this.employeeList.sortByName();
 		
-		EmployeeList resultList = new EmployeeList();
+		PersonList resultList = new PersonList();
 		
 		resultList.add(this.a);
 		resultList.add(this.b);
@@ -99,7 +96,7 @@ class EmployeeListTest {
 		
 		this.employeeList.sortById();
 		
-		EmployeeList resultList = new EmployeeList();		
+		PersonList resultList = new PersonList();		
 
 		resultList.add(this.e);
 		resultList.add(this.d);
@@ -108,5 +105,49 @@ class EmployeeListTest {
 		resultList.add(this.a);
 		
 		assertEquals(resultList, this.employeeList);
+	}
+	
+	@Test
+	public void removeEmployeeById() {
+		
+		this.employeeList.add(this.a);
+		
+		assertEquals(1, this.employeeList.size());
+		
+		this.employeeList.removeById(4);
+		assertEquals(0, this.employeeList.size());
+		
+	}
+	
+	@Test
+	public void updateEmployeeWithDuplicateId() {
+		
+		this.employeeList.add(this.a);
+		this.employeeList.add(this.b);
+		
+		Employee tmp = new Employee(4 , "Henk");
+			
+		
+    	Throwable exception = assertThrows(IllegalArgumentException.class,    			
+                ()->{
+                	this.employeeList.set(1, tmp);
+            		} );			
+	}
+	
+	
+	@Test
+	public void updateEmployeeById() {
+		
+		this.employeeList.add(this.a);
+		this.employeeList.add(this.b);
+		
+		Employee tmp = new Employee(4 , "Henk");
+		
+		this.employeeList.setByPersonId(tmp);
+		
+		
+		
+		IPerson tmpTwo = this.employeeList.getPersonById(4);
+		assertEquals("Henk", tmpTwo.getName());
 	}
 }

@@ -1,18 +1,8 @@
 package employeecrud.model;
 
-public class Employee{
-	
-	private int id;
-	private String name;
+public class Employee extends Person implements IEmployee{
+
 	private Employee partner;
-	
-	public int getId() {
-		return this.id;		
-	}
-	
-	public String getName() {
-		return this.name;
-	}
 	
 	public Employee getPartner() {
 		return this.partner;
@@ -39,7 +29,8 @@ public class Employee{
 			partner.setPartner(this);			
 		}	
 		
-	}	
+	}
+	
 	
 	public void clearPartner() {
 		this.partner = null;
@@ -50,12 +41,22 @@ public class Employee{
 		return this.partner != null && 
 				this.partner.getId() == partner.getId();
 	}
-	
+
+    @Override
+    public boolean equals(Object obj) {
+    	
+    	Employee comparingObj = (Employee)obj;
+    	
+    	if (this.id == comparingObj.getId()) {
+    		return true;
+    	}
+    	
+    	return false;
+    	
+    }   
+    
 	public Employee(int id, String name) {
-		
-		this.id = id;
-		this.name = name;		
+		super(id, name);
 	}
-	
 	
 }

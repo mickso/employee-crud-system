@@ -18,7 +18,7 @@ public class EmployeeTableModel extends AbstractTableModel {
 		this.personList = personList;
 		this.columns = new String[] { "ID", "Name", "Partner" };
 
-		this.columnsClasses = new Class[] { Integer.class, String.class, IEmployee.class };			
+		this.columnsClasses = new Class[] { Integer.class, String.class, IEmployee.class };
 
 	}
 
@@ -32,7 +32,6 @@ public class EmployeeTableModel extends AbstractTableModel {
 		return columnsClasses[columnIndex];
 	}
 
-	
 	// The object to render in a cell
 	public Object getValueAt(int row, int col) {
 		IEmployee employee = (IEmployee) this.personList.get(row);
@@ -42,29 +41,27 @@ public class EmployeeTableModel extends AbstractTableModel {
 		case 1:
 			return employee.getName();
 		case 2:
-			if(employee.getPartner() != null) {
+			if (employee.getPartner() != null) {
 				IEmployee partner = employee.getPartner();
-				return partner.getAlias();		
-			}			
+				return partner.getAlias();
+			}
 		default:
 			return null;
 		}
 
 	}
-	
+
 	@Override
-	   public void setValueAt(Object aValue, int rowIndex, int columnIndex)
-	   {
-		IEmployee employee = (IEmployee) this.personList.get(rowIndex);	       
-	       if(1 == columnIndex) { 
-	    	   employee.setName((String) aValue);
-	       }	       
-	   }
-	
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		IEmployee employee = (IEmployee) this.personList.get(rowIndex);
+		if (1 == columnIndex) {
+			employee.setName((String) aValue);
+		}
+	}
+
 	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex)
-	{
-        return columnIndex > 0;
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return columnIndex > 0;
 	}
 
 	// Optional, the name of your column

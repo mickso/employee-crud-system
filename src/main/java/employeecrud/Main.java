@@ -1,6 +1,6 @@
 package employeecrud;
 
-import employeecrud.model.EmployeeList;
+import employeecrud.model.PersonList;
 
 public class Main {	
        	
@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {		
 
 		System.out.println("Hello world");
-		EmployeeList list = new EmployeeList();		
+		PersonList list = new PersonList();		
 		
 	}
 

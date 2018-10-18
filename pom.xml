@@ -5,16 +5,16 @@
 
 	<groupId>nl.mick</groupId>
 	<artifactId>employeecrud</artifactId>
-	<version>1.0</version>
+	<version>0.1</version>
 	<packaging>jar</packaging>
 	<name>Employee CRUD System</name>
-
-	<properties>
-		<axis.version>1.4</axis.version>
-	</properties>
-
+    <properties>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
 	<build>
 		<finalName>employeecrud</finalName> 
+
 			<plugins>
 				<plugin>
 				    <groupId>org.apache.maven.plugins</groupId>

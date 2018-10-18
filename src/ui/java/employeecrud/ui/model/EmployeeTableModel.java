@@ -42,7 +42,10 @@ public class EmployeeTableModel extends AbstractTableModel {
 		case 1:
 			return employee.getName();
 		case 2:
-			return String.format("%03d | %s", employee.getId(), employee.getName());
+			if(employee.getPartner() != null) {
+				IEmployee partner = employee.getPartner();
+				return partner.getAlias();		
+			}			
 		default:
 			return null;
 		}

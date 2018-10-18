@@ -15,9 +15,8 @@ public class Employee extends Person implements IEmployee{
 			throw new IllegalArgumentException("Partner ID same as Employee ID");			
 		}
 		
-		if(this.hasPartner(partner)) {			
-			throw new IllegalArgumentException("Partner ID same as current partner ID");			
-		}		
+		if(this.hasPartner(partner)) 
+			return;
 		
 		if(this.partner != null) {
 			this.partner.clearPartner();
@@ -52,15 +51,21 @@ public class Employee extends Person implements IEmployee{
     @Override
     public boolean equals(Object obj) {
     	
-    	Employee comparingObj = (Employee)obj;
     	
-    	if (this.id == comparingObj.getId()) {
-    		return true;
+    	if(obj instanceof IEmployee) {
+    		
+        	Employee comparingObj = (Employee)obj;
+        	
+        	if (this.id == comparingObj.getId()) {
+        		return true;
+        	}
+    		
     	}
     	
     	return false;
     	
     }   
+
     
 
 	public Employee(int id, String name) {

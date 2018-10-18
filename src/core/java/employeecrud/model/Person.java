@@ -25,6 +25,12 @@ public class Person implements IPerson{
 		this.name = name;		
 	}
 
+	@Override
+	public String getAlias() {
+		
+		return String.format("%03d | %s", this.getId(), this.getName());
+	}
+
 
 
 }

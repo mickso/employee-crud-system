@@ -13,7 +13,7 @@ class EmployeeTest {
 	
 	@BeforeEach
 	public void setUp() {
-		
+				
 	    this.a = new Employee(4, "A");
 	    this.b = new Employee(3, "B");
 	    this.c = new Employee(2, "C");
@@ -42,17 +42,13 @@ class EmployeeTest {
     }
         
     @Test
-    void setPartnerToObjectWithCurrentPartnerId() {
+    void setPartnerToObjectWithCurrentPartnerId() throws Exception {
     	
+		this.a.setPartner(this.b);            		
+		Employee ACopy = new Employee(this.a.getId(), this.a.getName());            		
+		this.b.setPartner(ACopy);
     	
-    	Throwable exception = assertThrows(IllegalArgumentException.class,    			
-                ()->{                	
-            		this.a.setPartner(this.b);            		
-            		Employee ACopy = new Employee(this.a.getId(), this.a.getName());            		
-            		this.b.setPartner(ACopy);
-                });
-    	
-    	assertEquals("Partner ID same as current partner ID", exception.getMessage());
+    	assertEquals(this.b, this.a.getPartner());
     	
     }
     

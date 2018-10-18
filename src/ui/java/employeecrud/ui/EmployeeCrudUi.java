@@ -1,18 +1,12 @@
 package employeecrud.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collections;
 
-import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,6 +20,7 @@ import employeecrud.model.IEmployee;
 import employeecrud.model.IPerson;
 import employeecrud.model.PersonList;
 import employeecrud.ui.model.EmployeeTableModel;
+import employeecrud.ui.window.EmployeeDialog;
 
 @SuppressWarnings("serial")
 public class EmployeeCrudUi extends JFrame {	
@@ -66,9 +61,7 @@ public class EmployeeCrudUi extends JFrame {
 		
 		
 		
-		this.setLayout(new BorderLayout());
-		
-		
+		this.setLayout(new BorderLayout());				
 		
         EmployeeTableModel model = new EmployeeTableModel(this.employeeList);
         JTable table = new JTable(model);               
@@ -76,18 +69,22 @@ public class EmployeeCrudUi extends JFrame {
         addSortingToHeaders(this.employeeList, table);       
         
         JButton deleteButton = createDeleteButton(this.employeeList, table);
+        JButton addButton = createAddButton(this.employeeList, table);
+        JButton editButton = createEditButton(this.employeeList, table);
         
         JPanel dataPanel = new JPanel();
         dataPanel.add(new JScrollPane(table));
         
         JToolBar toolBar = new JToolBar("Toolbar");
+        toolBar.add(addButton);
+        toolBar.add(editButton);
         toolBar.add(deleteButton);
         
-        this.add(dataPanel, BorderLayout.SOUTH);
-        this.add(toolBar, BorderLayout.CENTER);        
+        this.add(dataPanel, BorderLayout.CENTER);
+        this.add(toolBar, BorderLayout.NORTH);
                        
          
-        this.setTitle("Editable Table Example");
+        this.setTitle("Employee CRUD System");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
         this.pack();
         this.setVisible(true);
@@ -114,7 +111,7 @@ public class EmployeeCrudUi extends JFrame {
 	}
 
 	private JButton createDeleteButton(PersonList employeeList, JTable table) {
-		JButton deleteButton = new JButton("delete");
+		JButton deleteButton = new JButton("delete selected");
         deleteButton.addActionListener(new ActionListener() {
 
             @Override
@@ -135,6 +132,48 @@ public class EmployeeCrudUi extends JFrame {
             }
         });
 		return deleteButton;
+	}
+	
+	private JButton createAddButton(PersonList employeeList, JTable table) {
+		JButton addButton = new JButton("add employee");
+		addButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+            	
+            	EmployeeDialog employeeWindow = new EmployeeDialog(employeeList);
+            	
+            	employeeWindow.pack();
+            	employeeWindow.setVisible(true);
+            	table.revalidate();
+            	table.repaint();
+            	
+            }
+        });
+		return addButton;
+	}
+	
+	private JButton createEditButton(PersonList employeeList, JTable table) {
+		JButton addButton = new JButton("edit selected employee");
+		addButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+            	
+            	int employeeId = (int) table.getValueAt(table.getSelectedRow(), 0); 
+            	IEmployee employeeToEdit = (IEmployee) employeeList.getPersonById(employeeId);
+            	
+            	EmployeeDialog employeeWindow = new EmployeeDialog(employeeList);
+            	employeeWindow.setEmployee(employeeToEdit);
+            	
+            	employeeWindow.pack();            	            	
+            	employeeWindow.setVisible(true);
+            	table.revalidate();
+            	table.repaint();
+            	
+            }
+        });
+		return addButton;
 	}
 
 

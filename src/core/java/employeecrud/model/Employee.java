@@ -2,14 +2,14 @@ package employeecrud.model;
 
 public class Employee extends Person implements IEmployee{
 
-	private Employee partner;
+	private IEmployee partner;
 	
-	public Employee getPartner() {
+	public IEmployee getPartner() {
 		return this.partner;
 	}
 	
 	
-	public void setPartner(Employee partner) throws Exception {
+	public void setPartner(IEmployee partner) throws Exception {
 		
 		if(this.id == partner.getId()) {			
 			throw new IllegalArgumentException("Partner ID same as Employee ID");			
@@ -33,10 +33,17 @@ public class Employee extends Person implements IEmployee{
 	
 	
 	public void clearPartner() {
-		this.partner = null;
+		
+		if(this.partner != null) {
+			
+			IEmployee tmpPartner = this.partner;
+			this.partner = null;			
+			tmpPartner.clearPartner();			
+		}		
+		
 	}
 	
-	public boolean hasPartner(Employee partner) {
+	public boolean hasPartner(IEmployee partner) {
 		
 		return this.partner != null && 
 				this.partner.getId() == partner.getId();
@@ -55,6 +62,7 @@ public class Employee extends Person implements IEmployee{
     	
     }   
     
+
 	public Employee(int id, String name) {
 		super(id, name);
 	}

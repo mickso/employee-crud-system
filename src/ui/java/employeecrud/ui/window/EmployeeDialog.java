@@ -19,6 +19,7 @@ import employeecrud.model.IEmployee;
 import employeecrud.model.IPerson;
 import employeecrud.model.PersonList;
 import employeecrud.ui.combobox.EmployeeRenderer;
+import employeecrud.ui.constants.UIMessageConstants;
 
 @SuppressWarnings("serial")
 public class EmployeeDialog extends JDialog {
@@ -102,22 +103,32 @@ public class EmployeeDialog extends JDialog {
 
 	private void saveForm() throws IllegalArgumentException {
 
+		String enteredName = employeeNameTextField.getText();
+		
+		if(enteredName == null || enteredName.length() < 1) {
+			this.showMessage(UIMessageConstants.NAME_IS_EMPTY);
+			return;
+		}
+		
+		
 		IEmployee tmpEmployee = employee;
 
 		if (isAddMode())
-			tmpEmployee = (IEmployee) PersonFactory.create("employee", employeeNameTextField.getText());
+			tmpEmployee = (IEmployee) PersonFactory.create("employee", enteredName);
 		else
-			tmpEmployee.setName(employeeNameTextField.getText());
+			tmpEmployee.setName(enteredName);
 
-		Object selectedItem = employeePartnerComboBox.getSelectedItem();
+		Object selectedPartner = employeePartnerComboBox.getSelectedItem();
 
-		if (selectedItem instanceof IEmployee)
-			tmpEmployee.setPartner((IEmployee) selectedItem);
+		if (selectedPartner instanceof IEmployee)
+			tmpEmployee.setPartner((IEmployee) selectedPartner);
 		else
 			tmpEmployee.clearPartner();
 
 		if (isAddMode())
 			employeeList.add(tmpEmployee);
+		
+		this.dispose();
 
 	}
 
@@ -138,7 +149,6 @@ public class EmployeeDialog extends JDialog {
 					showMessage(e.getMessage());
 
 				}
-				dispose();
 			}
 		});
 		return saveButton;

@@ -24,19 +24,7 @@ public class PersonList extends ArrayList<IPerson> {
 		this.validateEntry(element);
 		super.add(index, element);
 	}
-
-	@Override
-	public boolean addAll(Collection<? extends IPerson> c) {
-		// TODO Auto-generated method stub
-		return super.addAll(c);
-	}
-
-	@Override
-	public boolean addAll(int index, Collection<? extends IPerson> c) {
-		// TODO Auto-generated method stub
-		return super.addAll(index, c);
-	}
-
+	
 	@Override
 	public IPerson set(int index, IPerson element) {
 
